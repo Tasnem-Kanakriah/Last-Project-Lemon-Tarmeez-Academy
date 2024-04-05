@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lemon</title>
+    <link rel="icon" type="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAV9JREFUSEu1lYFNAzEMRd1JoJNAJymdBJgEmKRlEmASuIf8T74klzqIi3RS2tj+/vaPs7ON127j+JYBePIk7szs3sw+w/cVzm59f5rsLkq8B0CwFzOT4wjZg0DWAMj60SOS8Zs7kBmA+mAFC/7H7sH92O/xbwHE4M+TkUqUYQDwhxv+xi4BKMvZDWaantnRe9ArKwwo6+vEjF5UAKCThYKzxwHgTN+wBaQJIPS5fs5GyqFcOPaWyjuXNtIVOtQI1AK81ocUAN2HRQl4LTjn6iGqosyLHqj+Aih/ZwCkoqZM/xKwBfq9JlPkCcUoz0zW0aYr06pBo9GDMJoy/Q+A8h4tmlxdkkEGTVnHe1ChDwCsjZgFA3VfMs3GV+bYV8MxMpCKaBCGLJxvJmW9++WL45qsGYB6L5qTNwJEmtnsseNSLV6x6FyO3jg99dBgDwvO4pMpVt0BmHmTR9hUtpsD/ADxk2MZgaISzAAAAABJRU5ErkJggg==">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Import Boxicon -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Import Bootstrap CSS  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+    <style>
+        .card-body {
+            cursor: default;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ! Loader Scroll -->
+    <div id="loader" style="background-color: rgba(255, 255, 255, 0.89); width: 100px; height: 100px; position: fixed ; left: 0; right: 0; margin: auto auto; z-index: 1000;" class="rounded-5 d-flex top-0 bottom-0 justify-content-center align-items-center">
+        <div class="lds-ripple">
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- ! Start : Navbar -->
+    <div class="container p-0 mb-5">
+        <div class="d-flex justify-content-center">
+            <div class="col-9 nav-media position-fixed" style=" width: 56%; z-index: 1000;">
+                <nav
+                    class="navbar navbar-expand-lg bg-light rounded-bottom-4 shadow pt-3 px-3 border border-black border-top-0">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="index.html">
+                            <i class='bx bx-lemon'></i>
+                            Lemon
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                                </li>
+                                <li class="nav-item d-none" id="profile-page">
+                                    <a class="nav-link" onclick="profileClicked()">Profile</a>
+                                </li>
+                            </ul>
+                            <div class="d-flex justify-content-end gap-2 w-100">
+                                <button type="button" id="login-btn" class="btn btn-outline-success"
+                                    style="display: inline;" data-bs-toggle="modal" data-bs-target="#loginModal">Log
+                                    In</button>
+                                <div id="user-info"
+                                    class="d-none justify-content-center align-items-center pe-2 rounded-2 gap-2">
+                                    <img id="user-img" style="border-color: #9671B0 !important;"
+                                        class="border border-2 rounded-circle" src="" alt="">
+                                    <b id="username" class="pt-1"></b>
+                                </div>
+                                <button type="button" id="logout-btn" class="btn btn-outline-danger"
+                                    style="display: none;">Logout</button>
+                                <button type="button" id="register-btn" class="btn btn-outline-success"
+                                    style="display: inline;" data-bs-toggle="modal" data-bs-target="#registerModal">Sign
+                                    In</button>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- ? End : Navbar -->
+
+    <!-- ! Start Main Content -->
+    <div class="container p-0" style="margin-top: 120px;">
+        <!-- ! Start Current Post -->
+        <div class="d-flex justify-content-center mt-5">
+            <div class="col-9 container-media ">
+                <h3 class="mb-4" id="user-name-post">
+                    <span></span>'s
+                    Post
+                </h3>
+
+                <div id="post">
+
+                </div>
+            </div>
+            <!-- ? End Current Post -->
+        </div>
+    </div>
+    <!-- ? End Main Content -->
+
+    <!-- ! Start : Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="loginModalLabel">Login</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-1">
+                            <label for="username-login" class="col-form-label">Username :</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                                <input type="text" class="form-control" id="username-login" 
+                                    aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="mb-1">
+                            <label for="password-login" class="col-form-label">Password :</label>
+                            <input type="password" class="form-control" id="password-login" >
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close-btn-loginModal" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="login-btn-loginModal" class="btn btn-primary">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ? End : Login Modal -->
+
+    <!-- ! Start : Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="registerModalLabel">Register A New User</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-1">
+                            <label for="name-register" class="col-form-label">Name :</label>
+                            <input type="text" class="form-control" id="name-register" placeholder="Salam">
+                        </div>
+
+                        <div class="mb-1">
+                            <label for="username-register" class="col-form-label">Username :</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                                <input type="text" class="form-control" placeholder="salam05" id="username-register"
+                                    aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="mb-1">
+                            <label for="password-register" class="col-form-label">Password :</label>
+                            <input type="password" class="form-control" id="password-register"
+                                placeholder="Enter an eight-character code ********">
+                        </div>
+                        <div class="mb-1">
+                            <label for="profile-image-register" class="col-form-label">Profile Image :</label>
+                            <input type="file" class="form-control" id="profile-image-register">
+                        </div>
+                        <div class="mb-1">
+                            <label for="email-register" class="col-form-label">Email :</label>
+                            <input type="email" class="form-control" id="email-register"
+                                placeholder="salam05@example.com">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close-btn-registerModal" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="register-btn-registerModal" class="btn btn-primary">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ? End : Register Modal -->
+
+    <!-- ! Start : Add New Post Modal -->
+    <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addPostModalLabel">Add A New Post</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-1">
+                            <label for="post-title-input" class="col-form-label">Title :</label>
+                            <input type="text" class="form-control" id="post-title-input">
+                            <input type="hidden" class="form-control" id="post-id-input" value="">
+                        </div>
+                        <div class="mb-1">
+                            <label for="post-body-input" class="col-form-label">Description :</label>
+                            <textarea class="rounded-2 p-2 w-100" style="resize: none;" rows="3"
+                                id="post-body-input"></textarea>
+                        </div>
+                        <div class="mb-1">
+                            <label for="post-img-input" class="col-form-label">Image :</label>
+                            <input type="file" class="form-control" id="post-img-input">
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close-btn-addPostModal" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="addPost-btn-addPostModal" class="btn btn-primary"
+                        onclick="addNewPost()">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ? End : Add New Post Modal -->
+
+    <!-- ! Start : Show Alert -->
+    <div id="show-alert" class="position-fixed"></div>
+    <!-- ? End : Success Login -->
+
+
+
+    <!-- <script src="./node_modules/axios/dist/axios.min.js"></script> -->
+    <!-- Import Axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
+
+    <!-- Import Bootstrap JS  -->
+    <!-- <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+
+    <script src="mainLogic.js"></script>
+
+
+    <script src="post-details.js"></script>
+
+</body>
+
+</html>
